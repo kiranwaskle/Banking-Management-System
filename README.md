@@ -6,6 +6,8 @@ Banking Management System is a console-based Java application designed to simula
 
 🔗️Key Features
 
+
+
 👥🔒User Management:
 
 ➡️Registration: Allows new users to register by providing their full name, email, and password.
@@ -13,6 +15,8 @@ Banking Management System is a console-based Java application designed to simula
 ➡️Login: Validates user credentials and facilitates access to account operations.
 
 ➡️Account Existence Check: Ensures users cannot register multiple times with the same email.
+
+
 
 
 
@@ -26,6 +30,8 @@ Banking Management System is a console-based Java application designed to simula
 
 
 
+
+
 💸Transactions:
 
 ➡️Credit Money: Enables users to deposit funds securely into their account.
@@ -35,6 +41,8 @@ Banking Management System is a console-based Java application designed to simula
 ➡️Money Transfer: Facilitates transferring funds between accounts with validations for balance and account details.
 
 ➡️Balance Inquiry: Provides real-time balance information upon entering a security PIN.
+
+
 
 
 
