@@ -1,33 +1,32 @@
 
 import java.sql.*;
 import java.util.Scanner;
-
-import java.util.Scanner;
-
 import static java.lang.Class.forName;
+import java.sql.SQLException;
 
 public class BankingApp {
-    private static final String url = "jdbc:mysql://localhost:3306/banking_system";
-    private static final String username = "root";
-    private static final String password = "Admin@123";
-
+    private static final String url = "jdbc:oracle:thin:@localhost:1521:xe";
+    private static final String username = "system";
+    private static final String password = "password";
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        try{
-            Class.forName("com.mysql.cj.jdbc.Driver");
-        }catch (ClassNotFoundException e){
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+        }
+        catch (ClassNotFoundException e) {
             System.out.println(e.getMessage());
         }
-        try{
+        try {
+            //creating the instance of the all the three classes(User class, AccountManager class and Accounts class)
             Connection connection = DriverManager.getConnection(url, username, password);
-            Scanner scanner =  new Scanner(System.in);
-            User user = new User(connection, scanner);
+            Scanner scanner = new Scanner(System.in);
+            Users users = new Users(connection, scanner);
             Accounts accounts = new Accounts(connection, scanner);
             AccountManager accountManager = new AccountManager(connection, scanner);
 
             String email;
             long account_number;
 
-            while(true){
+            while (true) {
                 System.out.println("*** WELCOME TO BANKING SYSTEM ***");
                 System.out.println();
                 System.out.println("1. Register");
@@ -35,24 +34,24 @@ public class BankingApp {
                 System.out.println("3. Exit");
                 System.out.println("Enter your choice: ");
                 int choice1 = scanner.nextInt();
-                switch (choice1){
+                switch (choice1) {
                     case 1:
-                        user.register();
+                        users.register();
                         break;
                     case 2:
-                        email = user.login();
-                        if(email!=null){
+                        email = users.login();
+                        if (email != null) {
                             System.out.println();
-                            System.out.println("User Logged In!");
-                            if(!accounts.account_exist(email)){
+                            System.out.println("Users Logged In!");
+                            if (!accounts.account_exist(email)) {
                                 System.out.println();
                                 System.out.println("1. Open a new Bank Account");
                                 System.out.println("2. Exit");
-                                if(scanner.nextInt() == 1) {
+                                if (scanner.nextInt() == 1) {
                                     account_number = accounts.open_account(email);
                                     System.out.println("Account Created Successfully");
                                     System.out.println("Your Account Number is: " + account_number);
-                                }else{
+                                } else {
                                     break;
                                 }
 
@@ -89,8 +88,7 @@ public class BankingApp {
                                 }
                             }
 
-                        }
-                        else{
+                        } else {
                             System.out.println("Incorrect Email or Password!");
                         }
                     case 3:
@@ -102,8 +100,10 @@ public class BankingApp {
                         break;
                 }
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
+            System.out.println("Database error occurred: " + e.getMessage());
             e.printStackTrace();
         }
+
     }
 }
