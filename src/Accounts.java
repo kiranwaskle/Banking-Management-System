@@ -3,16 +3,13 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Accounts {
-    private Connection connection;
-    private Scanner scanner;
+    private final Connection connection;
+    private final Scanner scanner;
     public Accounts(Connection connection, Scanner scanner){
         this.connection = connection;
         this.scanner = scanner;
 
     }
-
-
-
 
     public long open_account(String email){
         if(!account_exist(email)) {
@@ -67,18 +64,20 @@ public class Accounts {
     private long generateAccountNumber() {
         try {
             Statement statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery("SELECT account_number from Accounts ORDER BY account_number DESC LIMIT 1");
+            // Corrected query for Oracle
+            ResultSet resultSet = statement.executeQuery("SELECT account_number FROM Accounts ORDER BY account_number DESC ");
             if (resultSet.next()) {
                 long last_account_number = resultSet.getLong("account_number");
-                return last_account_number+1;
+                return last_account_number + 1;
             } else {
-                return 10000100;
+                return 10000100;  // Default starting account number
             }
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-        return 10000100;
+        return 10000100;  // Return default if there is any issue
     }
+
 
     public boolean account_exist(String email){
         String query = "SELECT account_number from Accounts WHERE email = ?";
