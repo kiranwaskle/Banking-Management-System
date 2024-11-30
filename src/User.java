@@ -6,11 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-public class User {
-    private Connection connection;
-    private Scanner scanner;
+public class Users {
+    private final Connection connection;
+    private final Scanner scanner;
 
-    public User(Connection connection, Scanner scanner){
+    public Users(Connection connection, Scanner scanner){
         this.connection = connection;
         this.scanner = scanner;
     }
@@ -23,11 +23,11 @@ public class User {
         String email = scanner.nextLine();
         System.out.print("Password: ");
         String password = scanner.nextLine();
-        if(user_exist(email)) {
-            System.out.println("User Already Exists for this Email Address!!");
+        if(users_exist(email)) {
+            System.out.println("Users Already Exists for this Email Address!!");
             return;
         }
-        String register_query = "INSERT INTO User(full_name, email, password) VALUES(?, ?, ?)";
+        String register_query = "INSERT INTO Users(full_name, email, password) VALUES(?, ?, ?)";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(register_query);
             preparedStatement.setString(1, full_name);
@@ -50,7 +50,7 @@ public class User {
         String email = scanner.nextLine();
         System.out.print("Password: ");
         String password = scanner.nextLine();
-        String login_query = "SELECT * FROM User WHERE email = ? AND password = ?";
+        String login_query = "SELECT * FROM Users WHERE email = ? AND password = ?";
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(login_query);
             preparedStatement.setString(1, email);
@@ -67,8 +67,8 @@ public class User {
         return null;
     }
 
-    public boolean user_exist(String email){
-        String query = "SELECT * FROM user WHERE email = ?";
+    public boolean users_exist(String email){
+        String query = "SELECT * FROM users WHERE email = ?";
         try{
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             preparedStatement.setString(1, email);
