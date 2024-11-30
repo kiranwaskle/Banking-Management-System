@@ -95,8 +95,8 @@ public class AccountManager {
                 }
             }
         }catch (SQLException e){
-                e.printStackTrace();
-            }
+            e.printStackTrace();
+        }
         connection.setAutoCommit(true);
     }
 
@@ -134,8 +134,10 @@ public class AccountManager {
                         creditPreparedStatement.setLong(2, receiver_account_number);
                         debitPreparedStatement.setDouble(1, amount);
                         debitPreparedStatement.setLong(2, sender_account_number);
+
                         int rowsAffected1 = debitPreparedStatement.executeUpdate();
                         int rowsAffected2 = creditPreparedStatement.executeUpdate();
+
                         if (rowsAffected1 > 0 && rowsAffected2 > 0) {
                             System.out.println("Transaction Successful!");
                             System.out.println("Rs."+amount+" Transferred Successfully");
