@@ -5,10 +5,14 @@ import static java.lang.Class.forName;
 import java.sql.SQLException;
 
 public class BankingApp {
+    
+    //This variables are the final we can't change it's again 
     private static final String url = "jdbc:oracle:thin:@localhost:1521:xe";
     private static final String username = "system";
     private static final String password = "password";
+    //ClassNotFound and sql exception this exceptions it can be throw 
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        //Now we are connection our java applications to the JDBC API 
         try {
             Class.forName("mysql.jdbc.driver.MysqlDriver");
         }
@@ -17,6 +21,7 @@ public class BankingApp {
         }
         try {
             //creating the instance of the all the three classes(User class, AccountManager class and Accounts class)
+    
             Connection connection = DriverManager.getConnection(url, username, password);
             Scanner scanner = new Scanner(System.in);
             Users users = new Users(connection, scanner);
