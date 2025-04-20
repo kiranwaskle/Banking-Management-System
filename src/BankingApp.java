@@ -10,7 +10,7 @@ public class BankingApp {
     private static final String password = "password";
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         try {
-            Class.forName("oracle.jdbc.driver.OracleDriver");
+            Class.forName("oracle.jdbc.driver.MysqlDriver");
         }
         catch (ClassNotFoundException e) {
             System.out.println(e.getMessage());
